@@ -1,0 +1,130 @@
+# Base configuration for all tenancy types
+base:
+  security:
+    max_token_lifetime_hours: 24
+    allowed_origins: ["https://app.example.com"]  # Single application URL
+    rate_limit:
+      requests_per_minute: 60
+      burst: 10
+  
+  features:
+    file_versioning: true
+    audit_logging: true
+
+# Shared database tenancy configuration
+shared:
+  quotas:
+    storage_gb: 10
+    redis_mb: 500
+    api_calls_per_minute: 1000
+    max_file_size_mb: 100
+  
+  features:
+    file_versioning: true
+    advanced_search: false
+    audit_logging: true
+  
+  security:
+    max_token_lifetime_hours: 24
+    rate_limit:
+      requests_per_minute: 60
+      burst: 10
+  
+  notifications:
+    email: true
+    slack: false
+    webhook: false
+  
+  resources:
+    database:
+      pool_size: 5
+      max_overflow: 10
+    redis:
+      max_memory_mb: 500
+    storage:
+      container: "shared-tenant-data"
+
+# Dedicated resources tenancy configuration
+dedicated:
+  quotas:
+    storage_gb: 100
+    redis_mb: 2000
+    api_calls_per_minute: 5000
+    max_file_size_mb: 500
+  
+  features:
+    file_versioning: true
+    advanced_search: true
+    audit_logging: true
+    premium_support: true
+  
+  security:
+    max_token_lifetime_hours: 72
+    rate_limit:
+      requests_per_minute: 300
+      burst: 50
+    ip_whitelist_enabled: true
+  
+  notifications:
+    email: true
+    slack: true
+    webhook: true
+  
+  resources:
+    database:
+      pool_size: 10
+      max_overflow: 20
+      max_connections: 100
+      backup_enabled: true
+      backup_frequency: "daily"
+    redis:
+      dedicated_instance: true
+      max_memory_gb: 2
+      replication_enabled: true
+    storage:
+      dedicated_container: true
+      backup_enabled: true
+      cdn_enabled: true
+
+# Enterprise dedicated configuration (extends dedicated)
+enterprise:
+  quotas:
+    storage_gb: 500
+    redis_mb: 5000
+    api_calls_per_minute: 10000
+    max_file_size_mb: 1000
+  
+  features:
+    file_versioning: true
+    advanced_search: true
+    audit_logging: true
+    premium_support: true
+    dedicated_support: true
+    custom_integrations: true
+  
+  security:
+    max_token_lifetime_hours: 168  # 1 week
+    rate_limit:
+      requests_per_minute: 1000
+      burst: 100
+    ip_whitelist_enabled: true
+    custom_security_policies: true
+  
+  resources:
+    database:
+      pool_size: 20
+      max_overflow: 30
+      max_connections: 200
+      backup_enabled: true
+      backup_frequency: "hourly"
+      read_replicas: true
+    redis:
+      dedicated_instance: true
+      max_memory_gb: 5
+      replication_enabled: true
+      cluster_enabled: true
+    storage:
+      dedicated_container: true
+      backup_enabled: true
+      cdn_enabled: true
+      geo_replication: true 
