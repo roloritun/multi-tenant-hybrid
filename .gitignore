@@ -1,1 +1,9 @@
 frontend/
+.vscode/
+.venv/
+__pycache__/
+poerty.lock
+*.toml
+*.lock
+
+

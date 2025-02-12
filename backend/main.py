@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
-from database import db_manager
+from backend.database import db_manager
 import logging
+from backend.routers import files, tenant
+from backend.auth import router as auth
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +20,6 @@ def create_app() -> FastAPI:
     app = FastAPI(lifespan=lifespan)
     
     # Register routers
-    from routers import auth, files, tenant
     app.include_router(auth.router, prefix="/api")
     app.include_router(files.router, prefix="/api")
     app.include_router(tenant.router, prefix="/api")

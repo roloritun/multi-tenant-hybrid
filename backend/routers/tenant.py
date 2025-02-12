@@ -1,6 +1,10 @@
 from fastapi import APIRouter, HTTPException
 from sqlalchemy.exc import SQLAlchemyError
-from services.tenant_resources import tenant_resources
+from backend.models.tenant import Tenant
+from backend.schemas.auth import TenantCreate
+from backend.services.tenant_resources import tenant_resources
+from backend.database import db_manager
+from backend.services.tenant_resources import create_tenant_database
 
 router = APIRouter()
 
@@ -26,7 +30,7 @@ async def create_tenant(tenant_data: TenantCreate):
                 new_tenant.blob_storage_config = resources['blob_storage_config']
                 
                 # Create new database and initialize schema
-                create_tenant_database(db_name)
+                await create_tenant_database(db_name)
                 
             db.add(new_tenant)
             db.commit()

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, BackgroundTasks
-from schemas.auth import TenantCreate, UserCreate
-from services.signup_service import signup_service
+from backend.schemas.auth import TenantCreate, UserCreate
+from backend.services.signup_service import signup_service
 
 router = APIRouter()
 

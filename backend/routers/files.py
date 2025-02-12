@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Request, UploadFile, Depends, HTTPException
-from services.resource_quotas import quotas
-from services.monitoring import metrics
-from security.tenant_security import security
+from backend.services.resource_quotas import quotas
+from backend.services.monitoring import metrics
+from backend.security.tenant_security import security
 import json
 from datetime import UTC, datetime
 import logging

@@ -2,6 +2,8 @@ from azure.storage.blob import BlobServiceClient
 import redis
 from typing import Dict
 import json
+from sqlalchemy import create_engine
+from sqlalchemy.exc import SQLAlchemyError
 
 class TenantResourceManager:
     def __init__(self):
@@ -76,5 +78,20 @@ class TenantResourceManager:
             )
         
         return self.blob_clients[tenant.id]
+
+async def create_tenant_database(db_name: str):
+    """Create a new database for the tenant."""
+    try:
+        # Create a new engine for the PostgreSQL server
+        engine = create_engine("postgresql://user:pass@localhost/")
+        
+        # Connect to the PostgreSQL server
+        with engine.connect() as connection:
+            # Execute the SQL command to create a new database
+            connection.execute(f"CREATE DATABASE {db_name};")
+            
+    except SQLAlchemyError as e:
+        # Handle any errors that occur during the database creation
+        raise Exception(f"Failed to create database {db_name}: {str(e)}")
 
 tenant_resources = TenantResourceManager() 

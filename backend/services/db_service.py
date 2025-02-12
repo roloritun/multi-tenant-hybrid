@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from typing import Optional
-from models.tenant import Tenant, TenancyType
+from backend.models.tenant import Tenant, TenancyType
 from fastapi import HTTPException
 import logging
 

@@ -4,9 +4,9 @@ from google.oauth2 import id_token
 from google.auth.transport import requests
 from jose import JWTError, jwt
 from datetime import datetime, timedelta, UTC
-from config.tenant_config import config_manager
-from services.user_service import user_service
-from database import db_manager
+from backend.config.tenant_config import config_manager
+from backend.services.user_service import user_service
+from backend.database import db_manager
 from typing import Optional
 from sqlalchemy.orm import Session
 
