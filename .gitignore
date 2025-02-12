@@ -5,5 +5,4 @@ __pycache__/
 poerty.lock
 *.toml
 *.lock
-alembic/
 
